@@ -27,6 +27,7 @@ class LeNetsPlus(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
 
         self.feature_extractor = nn.Linear(128, 2)
+        self.prelu_feature_extractor = nn.PReLU()
         self.linear = nn.Linear(2, 10)
 
         # initialize weight
@@ -65,6 +66,7 @@ class LeNetsPlus(nn.Module):
         out = self.avgpool(out)
         
         feature = self.feature_extractor(out.view(-1, 128))
+        feature = self.prelu_feature_extractor(feature)
 
         out = self.linear(feature)
         
